@@ -46,11 +46,11 @@ while True:
 
 #Implementing Forward pass
 
-    yolo.setInput(blob)
+    yolo.setInput(blob)`
     start = time.time()
     output = yolo.forward(output_layers)
     end = time.time()
-    print(end-start)
+    print(f, ": ",end-start)
 
     f += 1
     t += end - start
@@ -77,9 +77,11 @@ while True:
                 confidences.append(float(confidence_current))
                 class_numbers.append(class_current)
 
+#Generating result by Implementing Non Maximum suppression
+
     result = cv2.dnn.NMSBoxes(bounding_boxes,confidences,
                               minimum_probability,threshold)
-
+#Adding bounding boxes and labels to the frame
     if len(result) > 0:
         for i in result.flatten():
             x_min,y_min = bounding_boxes[i][0], bounding_boxes[i][1]
@@ -92,6 +94,8 @@ while True:
                                                    confidences[i])
             cv2.putText(frame, text_box_current, (x_min, y_min - 5),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, colour_box_current, 2)
+
+    # Writing processed frame into the file
     if writer is None:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         writer = cv2.VideoWriter('videos/result-traffic-cars.mp4',fourcc,30,
