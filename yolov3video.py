@@ -10,7 +10,7 @@ import numpy as np
 import time
 
 #Read video file
-vid = cv2.VideoCapture('videos/traffic-cars.mp4')
+vid = cv2.VideoCapture('videos/traffic-cars-and-people.mp4')
 
 #importing yolo
 with open('yolo-coco-data/coco.names') as f:
@@ -46,7 +46,7 @@ while True:
 
 #Implementing Forward pass
 
-    yolo.setInput(blob)`
+    yolo.setInput(blob)
     start = time.time()
     output = yolo.forward(output_layers)
     end = time.time()
@@ -98,7 +98,7 @@ while True:
     # Writing processed frame into the file
     if writer is None:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        writer = cv2.VideoWriter('videos/result-traffic-cars.mp4',fourcc,30,
+        writer = cv2.VideoWriter('videos/result-traffic-cars-and-people.mp4',fourcc,30,
                                  (frame.shape[1],frame.shape[0]),True)
 
     writer.write(frame)
